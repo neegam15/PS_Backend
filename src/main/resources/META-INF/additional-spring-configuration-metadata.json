@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "hibernate.search.backend.type",
+    "type": "java.lang.String",
+    "description": "A description for 'hibernate.search.backend.type'"
+  },
+  {
+    "name": "hibernate.search.backend.directory.type",
+    "type": "java.lang.String",
+    "description": "A description for 'hibernate.search.backend.directory.type'"
+  },
+  {
+    "name": "hibernate.search.automatic_indexing.synchronization.strategy",
+    "type": "java.lang.String",
+    "description": "A description for 'hibernate.search.automatic_indexing.synchronization.strategy'"
+  },
+  {
+    "name": "recipe.api.url",
+    "type": "java.lang.String",
+    "description": "A description for 'recipe.api.url'"
+  }
+]}
