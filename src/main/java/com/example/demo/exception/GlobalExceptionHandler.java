@@ -36,15 +36,21 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(DatabaseOperationException.class)
-	public ResponseEntity<String> handleDatabaseOperation(DatabaseOperationException ex) {
+	public ResponseEntity<ErrorResponse> handleDatabaseOperation(DatabaseOperationException ex) {
 		logger.error("Error occurred: {}", ex.getMessage());
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+		
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+		
+		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> handleGenericException(Exception ex) {
+	public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
 		logger.error("Unexpected error occurred: {}", ex.getMessage());
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred.");
+		
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+		
+		return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }
