@@ -59,13 +59,13 @@ public class RecipeSearchServiceImpl implements RecipeSearchService {
 	@Override
 	@Transactional
 	public void loadRecipes(List<Recipe> recipes) {
-		logger.info("📦 Saving {} recipes into the database...", recipes.size());
+		logger.info("Saving {} recipes into the database...", recipes.size());
 		recipeRepository.saveAll(recipes);
 
 		// Call HibernateSearchInitializer to trigger indexing after saving recipes
-		logger.info("⚙️ Initializing full-text indexing...");
+		logger.info("Initializing full-text indexing...");
 		hibernateSearchInitializer.initialize();
-		logger.info("✅ Recipes indexed successfully.");
+		logger.info("Recipes indexed successfully.");
 	}
 
 	@Override

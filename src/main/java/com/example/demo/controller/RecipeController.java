@@ -26,7 +26,7 @@ public class RecipeController {
 	@GetMapping("/searchPartial")
 	@Operation(summary = "Search Recipes", description = "Search recipes by keyword (name or cuisine)")
 	public List<RecipeDropDownDTO> searchRecipesByPartialText(@RequestParam String query) {
-		logger.info("🔍 Searching recipes with: {}", query);
+		logger.info("Searching recipes with: {}", query);
 		return searchService.searchRecipesByPartialKeyword(query);
 	}
 

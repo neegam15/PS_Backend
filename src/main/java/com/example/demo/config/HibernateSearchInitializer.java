@@ -20,14 +20,14 @@ public class HibernateSearchInitializer {
 	@Transactional
 	public void initialize() {
 		try {
-			logger.info("🛠️ Starting indexing of Recipe entities...");
+			logger.info("Starting indexing of Recipe entities...");
 			Search.session(entityManager).massIndexer(Recipe.class).startAndWait();
-			logger.info("✅ Indexing completed successfully.");
+			logger.info("Indexing completed successfully.");
 		} catch (InterruptedException e) {
-			logger.error("❌ Indexing interrupted!", e);
+			logger.error("Indexing interrupted!", e);
 			Thread.currentThread().interrupt();
 		} catch (Exception e) {
-			logger.error("❌ Error during indexing!", e);
+			logger.error("Error during indexing!", e);
 		}
 	}
 }
