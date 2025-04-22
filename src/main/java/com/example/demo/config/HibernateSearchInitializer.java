@@ -17,7 +17,6 @@ public class HibernateSearchInitializer {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	// @PostConstruct
 	@Transactional
 	public void initialize() {
 		try {

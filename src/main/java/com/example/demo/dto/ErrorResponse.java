@@ -4,7 +4,6 @@ public class ErrorResponse {
     private int code;
     private String message;
 
-    // Constructors, getters, and setters
     public ErrorResponse(int code, String message) {
         this.code = code;
         this.message = message;

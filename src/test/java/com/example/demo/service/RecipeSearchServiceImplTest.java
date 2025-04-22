@@ -1,50 +1,25 @@
 package com.example.demo.service;
 
-import static org.hamcrest.CoreMatchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
-
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.search.engine.search.predicate.SearchPredicate;
-import org.hibernate.search.engine.search.predicate.dsl.SearchPredicateFactory;
-import org.hibernate.search.engine.search.projection.dsl.SearchProjectionFactory;
-import org.hibernate.search.engine.search.query.SearchQuery;
-import org.hibernate.search.engine.search.query.SearchResult;
-import org.hibernate.search.engine.search.query.dsl.SearchQueryOptionsStep;
-import org.hibernate.search.engine.search.query.dsl.SearchQuerySelectStep;
-import org.hibernate.search.mapper.orm.Search;
-import org.hibernate.search.mapper.orm.common.EntityReference;
-import org.hibernate.search.mapper.orm.search.loading.dsl.SearchLoadingOptionsStep;
-import org.hibernate.search.mapper.orm.session.SearchSession;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.http.ResponseEntity;
-
 import com.example.demo.client.RecipeClient;
 import com.example.demo.config.HibernateSearchInitializer;
-import com.example.demo.dto.RecipeDropDownDTO;
 import com.example.demo.entity.Recipe;
 import com.example.demo.exception.InvalidSearchKeywordException;
 import com.example.demo.exception.RecipeNotFoundException;
 import com.example.demo.mapper.RecipeMapper;
 import com.example.demo.repository.RecipeRepository;
-
 import jakarta.persistence.EntityManager;
 
 @ExtendWith(MockitoExtension.class)
@@ -133,6 +108,18 @@ public class RecipeSearchServiceImplTest {
 		assertThrows(RecipeNotFoundException.class, () -> recipeSearchService.getRecipeById(id));
 	}
 
+	@Test
+	void searchRecipesByPartialKeywordThrowsExceptionWhenKeywordIsNull() {
+		assertThrows(InvalidSearchKeywordException.class,
+				() -> recipeSearchService.searchRecipesByPartialKeyword(null));
+	}
+
+//
+	@Test
+	void searchRecipesByPartialKeywordThrowsExceptionWhenKeywordIsEmpty() {
+		assertThrows(InvalidSearchKeywordException.class, () -> recipeSearchService.searchRecipesByPartialKeyword(" "));
+	}
+
 //	@Test
 //	void searchRecipesByPartialKeywordReturnsResultsSuccessfully() {
 //		String keyword = "piz";
@@ -174,20 +161,6 @@ public class RecipeSearchServiceImplTest {
 //		}
 //	}
 
-	//
-	@Test
-	void searchRecipesByPartialKeywordThrowsExceptionWhenKeywordIsNull() {
-		assertThrows(InvalidSearchKeywordException.class,
-				() -> recipeSearchService.searchRecipesByPartialKeyword(null));
-	}
-
-//
-	@Test
-	void searchRecipesByPartialKeywordThrowsExceptionWhenKeywordIsEmpty() {
-		assertThrows(InvalidSearchKeywordException.class, () -> recipeSearchService.searchRecipesByPartialKeyword(" "));
-	}
-
-//
 //	@SuppressWarnings("deprecation")
 //	@Test
 //	void searchRecipesByPartialKeywordThrowsExceptionWhenNoResultsFound() {

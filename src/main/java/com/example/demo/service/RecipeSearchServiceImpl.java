@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.hibernate.search.engine.search.common.BooleanOperator;
 import org.hibernate.search.engine.search.query.SearchQuery;
 import org.hibernate.search.mapper.orm.Search;
@@ -69,31 +68,7 @@ public class RecipeSearchServiceImpl implements RecipeSearchService {
 		logger.info("✅ Recipes indexed successfully.");
 	}
 
-//	@Override
-//	@Transactional
-//	public List<RecipeDropDownDTO> searchRecipesByPartialKeyword(String keyword) {
-//
-//		if (keyword == null || keyword.trim().isEmpty()) {
-//			throw new InvalidSearchKeywordException("Search keyword cannot be null or empty");
-//		}
-//
-//		SearchSession searchSession = Search.session(entityManager);
-//
-//		// Using Wildcard query for partial matching
-//		SearchQuery<Recipe> searchQuery = searchSession.search(Recipe.class)
-//				.where(f -> f.wildcard().fields("name", "cuisine").matching(keyword + "*")).toQuery();
-//
-//		List<Recipe> results = searchQuery.fetchAll().hits();
-//
-//		if (results.isEmpty()) {
-//			throw new RecipeNotFoundException("No recipes found for the keyword: " + keyword);
-//		}
-//
-//		return results.stream().map(recipeMapper::toDropDownDto).collect(Collectors.toList());
-//	}
-
 	@Override
-	@Transactional
 	public List<RecipeDropDownDTO> searchRecipesByPartialKeyword(String keyword) {
 
 		if (keyword == null || keyword.trim().isEmpty()) {
@@ -105,6 +80,7 @@ public class RecipeSearchServiceImpl implements RecipeSearchService {
 		SearchQuery<Recipe> searchQuery = searchSession.search(Recipe.class)
 				.where(f -> f.simpleQueryString().fields("name", "cuisine").matching(keyword + "*") // this acts as a
 																									// partial match
+
 						.defaultOperator(BooleanOperator.AND)) // ensures all terms in keyword must match somewhere
 				.toQuery();
 
